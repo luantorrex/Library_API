@@ -18,13 +18,17 @@
 
  source venv/bin/activate
 
+### 4- Instale as dependências com o comando:
 
-### 4- Rode a aplicação com o comando:
+ pip install -r requirements.txt
+
+
+### 5- Rode a aplicação com o comando:
 
  flask run
  
  
-### 5- Exemplos reais de requisições:
+### 6- Exemplos reais de requisições:
 
  /client/{id_client}/books
  
