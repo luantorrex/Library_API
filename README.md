@@ -4,6 +4,8 @@
 
 1- Clone esse repositório e o acesse:
  git clone https://github.com/luantorrex/Library_API
+ 
+ cd Library_API
 
 2- Crie uma venv com o comando:
  python3 -m venv venv
