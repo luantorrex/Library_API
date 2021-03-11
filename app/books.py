@@ -1,6 +1,6 @@
 from app import db
 from app.models import Book
-from datetime import date
+from datetime import datetime
 
 def list_all():
     books_db = Book.query.all()
@@ -29,7 +29,7 @@ def list_loaned(id_client):
 
     for book in loaned_books_db:
         if book.date_loaned:
-            days_late = date.today() - book.date_loaned
+            days_late = (datetime.today() - book.date_loaned).days
             if days_late == 0:
                 late_fee = 0
             elif days_late <= 3:
@@ -45,3 +45,16 @@ def list_loaned(id_client):
             'name': book.name,
             'late_fee': late_fee
         }
+    
+    return loaned_books_dict
+
+
+def reserve(id_):
+    book = Book.query.filter_by(id=id_).first()
+    book.loaned = True
+    book.date_loaned = datetime.today()
+
+    db.session.add(book)
+    db.session.commit()
+
+    return book.name

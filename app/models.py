@@ -9,9 +9,11 @@ class Book(db.Model):
     loaned = db.Column(db.Boolean, default=False, nullable=False)
     date_loaned = db.Column(db.DateTime, default=None)
 
-    def __init__(self, name, author):
+    def __init__(self, name, author, id_client=None, date_loaned=None):
         self.name = name
         self.author = author
+        self.date_loaned = date_loaned
+        self.id_client = id_client
 
     def __repr__(self):
         return '<Book %r>' % self.name
