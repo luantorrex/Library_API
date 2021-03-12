@@ -1,6 +1,6 @@
 # External
 import json
-from flask import jsonify, make_response
+from flask import jsonify, make_response, abort
 
 # Internal
 from app import app, books, db
@@ -14,8 +14,11 @@ def index():
     }))
 
 
-@app.route('/client/<id_client>/books', methods=['GET'])
+@app.route('/client/<int:id_client>/books', methods=['GET'])
 def list_loaned_books(id_client):
+    if id_client is None or type(id_client) != int or not books.book_exists(id_client):
+        abort(404, description="Resource not found")
+
     loaned_books = books.list_loaned(id_client)
 
     return make_response(jsonify({
@@ -23,10 +26,13 @@ def list_loaned_books(id_client):
     }))
 
 
-@app.route('/books/<id>/reserve', methods=['GET', 'POST'])
+@app.route('/books/<int:id>/reserve', methods=['GET', 'POST'])
 def book_reserve(id):   
-    book_name = books.reserve(id)
+    if id is None or type(id) != int or not books.book_exists(id):
+        abort(404, description="Resource not found")
     
+    book_name = books.reserve(id)
+
     return make_response(jsonify({
         'msg': 'Book {} has been loaned.'.format(book_name)
     }))
@@ -39,3 +45,8 @@ def list_all_books():
     return make_response(jsonify({
         'data': books_dict
     }))
+
+
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404

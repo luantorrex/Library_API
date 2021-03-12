@@ -58,3 +58,11 @@ def reserve(id_):
     db.session.commit()
 
     return book.name
+
+
+def book_exists(id_):
+    book = Book.query.filter_by(id=id_).first()
+    if book:
+        return True
+    else:
+        return False
