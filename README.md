@@ -30,8 +30,8 @@
  
 ### 6- Exemplos reais de requisições:
 
- /client/{id_client}/books
+ curl localhost:5000/client/{id_client}/books
  
- /books/{id}/reserve
+ curl localhost:5000/books/{id}/reserve
  
- /books
+ curl localhost:5000/books
