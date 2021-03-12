@@ -3,7 +3,7 @@ import json
 from flask import jsonify, make_response, abort
 
 # Internal
-from app import app, books, db
+from app import app, books, db, clients
 from app.models import Book
 
 
@@ -16,7 +16,7 @@ def index():
 
 @app.route('/client/<int:id_client>/books', methods=['GET'])
 def list_loaned_books(id_client):
-    if id_client is None or type(id_client) != int or not books.book_exists(id_client):
+    if id_client is None or type(id_client) != int or not clients.client_exists(id_client):
         abort(404, description="Resource not found")
 
     loaned_books = books.list_loaned(id_client)
